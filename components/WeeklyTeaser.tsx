@@ -43,26 +43,26 @@ export default function WeeklyTeaser() {
       className="relative py-20 md:py-28 overflow-hidden"
       aria-label="Weekly specials"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-ember)] to-[#A6501F] grain" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-ember)] via-[#D26020] to-[#A6501F] grain" />
 
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 text-center text-[var(--brand-cream)]">
-        <div className="weekly-anim inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.12)] backdrop-blur-sm border border-[rgba(255,255,255,0.2)] text-[11px] uppercase tracking-[0.22em] font-medium mb-6">
+      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 text-center text-[var(--brand-cream-bright)] z-10">
+        <div className="weekly-anim inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(15,10,6,0.25)] backdrop-blur-sm border border-[rgba(245,235,216,0.25)] text-[11px] uppercase tracking-[0.22em] font-medium mb-6 mono">
           <Tag className="w-3.5 h-3.5" />
           This Week&rsquo;s Deals
         </div>
         <h2 className="weekly-anim font-display headline-large max-w-3xl mx-auto">
-          New specials drop every week.
+          See this week&rsquo;s actual ad
           <br />
-          <span className="italic">Don&rsquo;t miss them.</span>
+          <span className="italic">— live from the store.</span>
         </h2>
-        <p className="weekly-anim mt-6 text-[17px] opacity-90 max-w-xl mx-auto leading-relaxed">
-          Fresh produce deals, butcher counter savings, bakery specials, and
-          grill combos — updated every Monday on our Facebook page.
+        <p className="weekly-anim mt-6 text-[17px] opacity-95 max-w-xl mx-auto leading-relaxed">
+          Our current weekly ad updates every Monday. View the full PDF-style
+          ad with all produce, butcher counter, and grocery specials.
         </p>
         <div className="weekly-anim mt-8">
           <Link
             href="/weekly-ad"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-cream)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-white transition-colors group"
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-cream-bright)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-white transition-colors group"
           >
             See This Week&rsquo;s Ad
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

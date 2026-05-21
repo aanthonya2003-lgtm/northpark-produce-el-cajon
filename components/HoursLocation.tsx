@@ -44,36 +44,34 @@ export default function HoursLocation() {
       className="relative py-24 md:py-32 bg-[var(--brand-deep)] text-[var(--brand-cream)] overflow-hidden grain"
       aria-label="Hours and location"
     >
-      <div className="max-w-[1400px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-10 lg:gap-12">
-        {/* Info */}
+      <div className="max-w-[1400px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-10 lg:gap-12 relative z-10">
         <div className="lg:col-span-5 hl-anim">
           <div className="flex items-center gap-3 mb-5">
-            <span className="w-10 h-px bg-[var(--brand-gold)]" />
+            <span className="w-10 h-px bg-[var(--brand-ember)]" />
             <span className="eyebrow">Visit Us</span>
           </div>
-          <h2 className="font-display headline-large">
+          <h2 className="font-display headline-large text-[var(--brand-cream-bright)]">
             Stop by Chase Ave.
             <br />
-            <span className="italic text-[var(--brand-gold)]">
+            <span className="italic text-[var(--brand-ember-light)]">
               We&rsquo;ll keep the bread warm.
             </span>
           </h2>
 
           <div className="mt-10 space-y-7">
-            {/* Address */}
             <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-full bg-[rgba(212,168,67,0.15)] inline-flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-[var(--brand-gold)]" />
+              <div className="w-11 h-11 rounded-full bg-[rgba(232,118,44,0.15)] inline-flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-[var(--brand-ember)]" />
               </div>
               <div>
-                <h3 className="font-display text-lg font-semibold mb-1">
+                <h3 className="font-display text-lg font-semibold mb-1 text-[var(--brand-cream-bright)]">
                   Address
                 </h3>
                 <a
                   href={business.address.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] opacity-85 hover:text-[var(--brand-gold)] transition-colors"
+                  className="text-[15px] opacity-85 hover:text-[var(--brand-ember)] transition-colors"
                 >
                   432 E Chase Ave
                   <br />
@@ -82,31 +80,29 @@ export default function HoursLocation() {
               </div>
             </div>
 
-            {/* Phone */}
             <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-full bg-[rgba(212,168,67,0.15)] inline-flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-[var(--brand-gold)]" />
+              <div className="w-11 h-11 rounded-full bg-[rgba(232,118,44,0.15)] inline-flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 text-[var(--brand-ember)]" />
               </div>
               <div>
-                <h3 className="font-display text-lg font-semibold mb-1">
+                <h3 className="font-display text-lg font-semibold mb-1 text-[var(--brand-cream-bright)]">
                   Phone
                 </h3>
                 <a
                   href={`tel:${business.phoneTel}`}
-                  className="phone text-[15px] opacity-85 hover:text-[var(--brand-gold)] transition-colors"
+                  className="phone text-[15px] opacity-85 hover:text-[var(--brand-ember)] transition-colors"
                 >
                   {business.phone}
                 </a>
               </div>
             </div>
 
-            {/* Hours */}
             <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-full bg-[rgba(212,168,67,0.15)] inline-flex items-center justify-center flex-shrink-0">
-                <Clock className="w-5 h-5 text-[var(--brand-gold)]" />
+              <div className="w-11 h-11 rounded-full bg-[rgba(232,118,44,0.15)] inline-flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 text-[var(--brand-ember)]" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display text-lg font-semibold mb-2">
+                <h3 className="font-display text-lg font-semibold mb-2 text-[var(--brand-cream-bright)]">
                   Hours
                 </h3>
                 <div className="space-y-1.5 text-[14px] opacity-85">
@@ -118,7 +114,7 @@ export default function HoursLocation() {
                     <span>Store · Sat – Sun</span>
                     <span className="hours">8:00a – 10:00p</span>
                   </div>
-                  <div className="flex items-center justify-between gap-6 max-w-sm pt-1 mt-2 border-t border-[rgba(212,168,67,0.15)]">
+                  <div className="flex items-center justify-between gap-6 max-w-sm pt-1 mt-2 border-t border-[rgba(232,118,44,0.15)]">
                     <span>Grill · Daily</span>
                     <span className="hours">9:00a – 8:00p</span>
                   </div>
@@ -130,7 +126,7 @@ export default function HoursLocation() {
           <div className="mt-10">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 text-[var(--brand-gold)] font-semibold text-sm hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-[var(--brand-ember)] font-semibold text-sm hover:gap-3 transition-all"
             >
               Get directions & contact info
               <ArrowRight className="w-4 h-4" />
@@ -138,9 +134,8 @@ export default function HoursLocation() {
           </div>
         </div>
 
-        {/* Map */}
         <div className="lg:col-span-7 hl-anim">
-          <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[420px] overflow-hidden rounded-2xl border border-[rgba(212,168,67,0.2)]">
+          <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[420px] overflow-hidden rounded-2xl border border-[rgba(232,118,44,0.2)]">
             <iframe
               title="NorthPark Produce El Cajon location map"
               src="https://www.google.com/maps?q=432+E+Chase+Ave,+El+Cajon,+CA+92020&output=embed"

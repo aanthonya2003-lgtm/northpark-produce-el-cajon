@@ -15,10 +15,10 @@ const items = [
   "Bulk Spices from $2",
 ];
 
-function Star() {
+function Diamond() {
   return (
     <span
-      className="inline-block w-2 h-2 mx-7 rotate-45 bg-[var(--brand-gold)] opacity-70 align-middle"
+      className="inline-block w-2 h-2 mx-7 rotate-45 bg-[var(--brand-ember)] opacity-75 align-middle"
       aria-hidden
     />
   );
@@ -55,13 +55,12 @@ export default function TrustMarquee() {
     return () => ctx.revert();
   }, []);
 
-  // Double the items so the loop is seamless when translated -50%
   const doubled = [...items, ...items];
 
   return (
     <section
       ref={containerRef}
-      className="relative py-7 md:py-9 bg-[var(--brand-deep)] text-[var(--brand-cream)] overflow-hidden border-y border-[rgba(212,168,67,0.18)]"
+      className="relative py-7 md:py-9 bg-[var(--brand-deep)] text-[var(--brand-cream)] overflow-hidden border-y border-[rgba(232,118,44,0.18)]"
       aria-label="What makes us special"
     >
       <div
@@ -75,7 +74,7 @@ export default function TrustMarquee() {
             className="font-display text-xl md:text-2xl font-semibold tracking-tight flex items-center"
           >
             {item}
-            <Star />
+            <Diamond />
           </span>
         ))}
       </div>
