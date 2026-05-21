@@ -29,7 +29,7 @@ const stats: Stat[] = [
     value: 100,
     suffix: "%",
     label: "Halal Certified",
-    sub: "Verified on-premises",
+    sub: "On-premises · Zabihah verified",
     icon: <BadgeCheck className="w-7 h-7" strokeWidth={1.6} />,
   },
   {
@@ -56,7 +56,14 @@ export default function StatsCounter() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    if (prefersReduced || !sectionRef.current) return;
+    if (prefersReduced || !sectionRef.current) {
+      sectionRef.current
+        ?.querySelectorAll<HTMLElement>("[data-counter]")
+        .forEach((el) => {
+          el.textContent = el.dataset.counter || "0";
+        });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       const counters = sectionRef.current?.querySelectorAll<HTMLElement>(
@@ -104,17 +111,17 @@ export default function StatsCounter() {
       className="relative py-24 md:py-32 bg-[var(--brand-deep)] text-[var(--brand-cream)] overflow-hidden grain"
       aria-label="Why NorthPark Produce"
     >
-      <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <div className="flex items-center justify-center gap-3 mb-5">
-            <span className="w-10 h-px bg-[var(--brand-gold)]" />
+            <span className="w-10 h-px bg-[var(--brand-ember)]" />
             <span className="eyebrow">Why Choose Us</span>
-            <span className="w-10 h-px bg-[var(--brand-gold)]" />
+            <span className="w-10 h-px bg-[var(--brand-ember)]" />
           </div>
           <h2 className="font-display headline-large">
             Forty-five years.
             <br />
-            <span className="italic text-[var(--brand-gold)]">
+            <span className="italic text-[var(--brand-saffron)]">
               The same family. The same standard.
             </span>
           </h2>
@@ -124,14 +131,14 @@ export default function StatsCounter() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="stat-card relative p-6 md:p-8 rounded-2xl border border-[rgba(212,168,67,0.18)] bg-[rgba(212,168,67,0.04)] hover:border-[var(--brand-gold)] hover:bg-[rgba(212,168,67,0.08)] transition-all duration-500 text-center group"
+              className="stat-card relative p-6 md:p-8 rounded-2xl border border-[rgba(232,118,44,0.2)] bg-[rgba(232,118,44,0.05)] hover:border-[var(--brand-ember)] hover:bg-[rgba(232,118,44,0.1)] transition-all duration-500 text-center group"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[rgba(212,168,67,0.1)] text-[var(--brand-gold)] mb-5 group-hover:scale-110 transition-transform duration-500">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[rgba(232,118,44,0.12)] text-[var(--brand-ember)] mb-5 group-hover:scale-110 transition-transform duration-500">
                 {stat.icon}
               </div>
-              <div className="font-display text-5xl md:text-6xl font-bold leading-none tracking-tight tnum">
+              <div className="font-display text-5xl md:text-6xl font-bold leading-none tracking-tight stat-num">
                 <span data-counter={stat.value}>0</span>
-                <span className="text-[var(--brand-gold)]">{stat.suffix}</span>
+                <span className="text-[var(--brand-ember)]">{stat.suffix}</span>
               </div>
               <h3 className="font-display text-lg md:text-xl font-semibold mt-3">
                 {stat.label}

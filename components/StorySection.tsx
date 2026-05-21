@@ -6,13 +6,11 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
+import { images, wixSize } from "@/lib/images";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-const STORY_IMAGE =
-  "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=1600&q=85&auto=format&fit=crop";
 
 export default function StorySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,11 +25,11 @@ export default function StorySection() {
     const ctx = gsap.context(() => {
       gsap.from(imageRef.current, {
         clipPath: "inset(100% 0 0 0)",
-        duration: 1.3,
+        duration: 1.4,
         ease: "power4.inOut",
         scrollTrigger: {
           trigger: imageRef.current,
-          start: "top 75%",
+          start: "top 78%",
           toggleActions: "play none none reverse",
         },
       });
@@ -71,27 +69,25 @@ export default function StorySection() {
       aria-label="Our story"
     >
       <div className="max-w-[1400px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        {/* Image */}
         <div className="lg:col-span-6 order-2 lg:order-1">
           <div
             ref={imageRef}
             className="relative aspect-[4/5] overflow-hidden rounded-2xl"
           >
             <Image
-              src={STORY_IMAGE}
-              alt="A close-up of fresh herbs, spices, and Mediterranean ingredients"
+              src={wixSize(images.aboutHero, 1400)}
+              alt="Inside NorthPark Produce — fresh ingredients and Mediterranean staples"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover rounded-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(28,14,6,0.25)] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,10,6,0.3)] via-transparent to-transparent" />
           </div>
         </div>
 
-        {/* Text */}
         <div className="lg:col-span-6 order-1 lg:order-2 story-text">
           <div className="flex items-center gap-3 mb-5">
-            <span className="w-10 h-px bg-[var(--brand-gold)]" />
+            <span className="w-10 h-px bg-[var(--brand-ember)]" />
             <span className="eyebrow">Our Story</span>
           </div>
           <h2 className="font-display text-[var(--brand-deep)] headline-large">
@@ -114,12 +110,12 @@ export default function StorySection() {
             Persia, Russia, Mexico, and beyond.
           </p>
 
-          <figure className="mt-8 pl-6 border-l-2 border-[var(--brand-gold)]">
+          <figure className="mt-8 pl-6 border-l-2 border-[var(--brand-saffron)]">
             <blockquote className="font-display text-[20px] md:text-[22px] italic leading-snug text-[var(--brand-deep)]">
               &ldquo;See how affordable gourmet can be.&rdquo;
             </blockquote>
-            <figcaption className="mt-2 text-[12px] uppercase tracking-[0.22em] text-[var(--brand-muted)]">
-              — NorthPark Produce, since 1980
+            <figcaption className="mt-2 text-[12px] uppercase tracking-[0.22em] text-[var(--brand-muted)] mono">
+              — NorthPark Produce · El Cajon · North Park · Poway
             </figcaption>
           </figure>
 
