@@ -1,6 +1,14 @@
 // Verified business data — sourced directly from northparkproduce.com,
-// Google Business, Facebook (northparkproduceelcajon), Yelp, and Zabihah.
-// Do NOT modify without re-verification.
+// Google Business, Facebook (northparkproduceelcajon), Yelp, Postmates (UE-backed), Zabihah.
+// DO NOT modify without re-verification.
+//
+// Verification status (2026-05-21):
+// - Grubhub: VERIFIED LIVE — /restaurant/north-park-produce-e-chase-ave-432-e-chase-ave-el-cajon/2875424
+// - Uber Eats: VERIFIED EL CAJON — hash bUPVLSjOTpKNpvlAzMeXsQ confirmed
+//   (Postmates uses same hash & resolves to 432 East Chase Avenue, El Cajon)
+// - DoorDash: NOT AVAILABLE for El Cajon location (only San Diego/North Park has DoorDash)
+// - Facebook: VERIFIED — northparkproduceelcajon page, 4,554 likes, 76 talking
+// - Instagram: NO VERIFIED ACCOUNT for El Cajon Chase Ave location
 
 export const business = {
   name: "NorthPark Produce",
@@ -8,6 +16,7 @@ export const business = {
   tagline: "We Searched the Planet. We Brought It Home.",
   founded: 1980,
   yearsServing: new Date().getFullYear() - 1980,
+
   address: {
     street: "432 E Chase Ave",
     city: "El Cajon",
@@ -21,6 +30,7 @@ export const business = {
   phone: "(619) 440-4401",
   phoneTel: "+16194404401",
   email: "northparkproduce@yahoo.com",
+
   storeHours: [
     { day: "Monday", hours: "7:30 AM – 10:00 PM" },
     { day: "Tuesday", hours: "7:30 AM – 10:00 PM" },
@@ -33,25 +43,45 @@ export const business = {
   restaurantHours: [
     { day: "Monday – Sunday", hours: "9:00 AM – 8:00 PM" },
   ],
-  locations: ["El Cajon (this location)", "North Park, San Diego", "Poway"],
-  // Verified delivery platforms — El Cajon location only
+
+  allLocations: [
+    {
+      name: "El Cajon (this location)",
+      address: "432 E Chase Ave, El Cajon, CA 92020",
+      phone: "(619) 440-4401",
+      current: true,
+    },
+    {
+      name: "North Park, San Diego",
+      address: "3551 El Cajon Blvd, San Diego, CA 92104",
+      phone: "(619) 516-3336",
+      current: false,
+    },
+    {
+      name: "Poway",
+      address: "12342 Poway Rd, Poway, CA 92064",
+      phone: "(858) 391-9100",
+      current: false,
+    },
+  ],
+
   delivery: [
     {
       platform: "Grubhub",
       url: "https://www.grubhub.com/restaurant/north-park-produce-e-chase-ave-432-e-chase-ave-el-cajon/2875424",
       verified: true,
       eta: "30–45 min",
-      tagline: "Browse menu, order in seconds",
+      tagline: "Browse, order, track",
     },
     {
       platform: "Uber Eats",
       url: "https://www.ubereats.com/store/north-park-produce/bUPVLSjOTpKNpvlAzMeXsQ",
       verified: true,
       eta: "25–40 min",
-      tagline: "Track in real time",
+      tagline: "Live order tracking",
     },
   ],
-  // Verified social — El Cajon page only
+
   social: [
     {
       platform: "Facebook",
@@ -61,7 +91,7 @@ export const business = {
       verified: true,
     },
   ],
-  // Verified press coverage
+
   press: [
     {
       outlet: "SanDiegoVille",
@@ -89,8 +119,14 @@ export const business = {
       title: "Halal-certified butcher & deli",
       url: "https://www.zabihah.com/restaurants/ca33a6d4-7767-11ef-95ae-6045bdeb9f57/north-park-produce-el-cajon-ca",
     },
+    {
+      outlet: "Wheree",
+      date: "Editorial",
+      title: "Iraqi market editorial review",
+      url: "https://north-park-produce-1.wheree.com/",
+    },
   ],
-  // Verified testimonials
+
   testimonials: [
     {
       quote:
@@ -140,6 +176,13 @@ export const business = {
         "The enticing aromas of freshly baked bread and hot meat pies waft through the aisles, creating an inviting atmosphere.",
       author: "Wheree Editorial",
       source: "Editorial",
+      rating: 5,
+    },
+    {
+      quote:
+        "This place continues to amaze me because they're always new discoveries around every aisle.",
+      author: "Christine P.",
+      source: "Roadtrippers",
       rating: 5,
     },
   ],

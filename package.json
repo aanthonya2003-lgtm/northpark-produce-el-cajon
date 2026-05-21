@@ -1,8 +1,8 @@
 {
   "name": "northpark-produce-el-cajon",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "NorthPark Produce El Cajon — International Market & Mediterranean Grill. Family owned since 1980.",
+  "description": "NorthPark Produce El Cajon — International Market & Mediterranean Grill. Family owned since 1980. v2.0 — real photography, functional forms, live weekly ad.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

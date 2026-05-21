@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,11 +20,18 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#1C0E06",
+  themeColor: "#0F0A06",
 };
 
 export const metadata: Metadata = {
@@ -51,11 +58,7 @@ export const metadata: Metadata = {
   authors: [{ name: "NorthPark Produce" }],
   creator: "NorthPark Produce",
   publisher: "NorthPark Produce",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     title: "NorthPark Produce El Cajon",
     description:
@@ -96,72 +99,86 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "GroceryStore",
-    name: "NorthPark Produce",
-    alternateName: "NorthPark Produce El Cajon",
-    image:
-      "https://static.wixstatic.com/media/c63d62_028650d798504091ad3d70220ac997bd~mv2.png",
-    description:
-      "Family-owned international grocery store, halal butcher, Mediterranean grill, and in-store bakery. Serving El Cajon and Greater San Diego since 1980.",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: business.address.street,
-      addressLocality: business.address.city,
-      addressRegion: business.address.state,
-      postalCode: business.address.zip,
-      addressCountry: "US",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: business.address.geo.lat,
-      longitude: business.address.geo.lng,
-    },
-    telephone: business.phoneTel,
-    email: business.email,
-    url: "https://northparkproduce.com",
-    sameAs: business.social.map((s) => s.url),
-    servesCuisine: [
-      "Middle Eastern",
-      "Mediterranean",
-      "Iraqi",
-      "Lebanese",
-      "Halal",
-    ],
-    paymentAccepted: ["Cash", "Credit Card", "Apple Pay"],
-    priceRange: "$",
-    openingHoursSpecification: [
+    "@graph": [
       {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "07:30",
-        closes: "22:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday", "Sunday"],
-        opens: "08:00",
-        closes: "22:00",
+        "@type": ["Restaurant", "GroceryStore"],
+        "@id": "https://northpark-produce-el-cajon.vercel.app/#business",
+        name: "NorthPark Produce",
+        alternateName: "NorthPark Produce El Cajon",
+        image: [
+          "https://static.wixstatic.com/media/c63d62_9c01db2728bc4ef98114451686c884b6~mv2.jpg",
+          "https://static.wixstatic.com/media/c63d62_fc750c61455f4d8fa90c9b03a43cbb24~mv2.jpg",
+        ],
+        logo: "https://static.wixstatic.com/media/c63d62_028650d798504091ad3d70220ac997bd~mv2.png",
+        description:
+          "Family-owned international grocery store, halal butcher, Mediterranean grill, and in-store bakery. Serving El Cajon and Greater San Diego since 1980.",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: business.address.street,
+          addressLocality: business.address.city,
+          addressRegion: business.address.state,
+          postalCode: business.address.zip,
+          addressCountry: "US",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: business.address.geo.lat,
+          longitude: business.address.geo.lng,
+        },
+        telephone: business.phoneTel,
+        email: business.email,
+        url: "https://northparkproduce.com",
+        sameAs: [
+          business.social[0]?.url,
+          "https://www.yelp.com/biz/north-park-produce-el-cajon-5",
+          "https://www.zabihah.com/restaurants/ca33a6d4-7767-11ef-95ae-6045bdeb9f57/north-park-produce-el-cajon-ca",
+        ],
+        servesCuisine: [
+          "Middle Eastern", "Mediterranean", "Iraqi", "Lebanese", "Halal", "International",
+        ],
+        paymentAccepted: ["Cash", "Credit Card", "Apple Pay"],
+        priceRange: "$",
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "07:30",
+            closes: "22:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Saturday", "Sunday"],
+            opens: "08:00",
+            closes: "22:00",
+          },
+        ],
+        hasMenu: "https://northpark-produce-el-cajon.vercel.app/menu",
+        founder: {
+          "@type": "Organization",
+          name: "NorthPark Produce",
+          foundingDate: "1980",
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.4",
+          reviewCount: "101",
+          bestRating: "5",
+          worstRating: "1",
+        },
+        amenityFeature: [
+          { "@type": "LocationFeatureSpecification", name: "Halal Certified", value: true },
+          { "@type": "LocationFeatureSpecification", name: "Wheelchair Accessible", value: true },
+          { "@type": "LocationFeatureSpecification", name: "Private Parking", value: true },
+          { "@type": "LocationFeatureSpecification", name: "Bike Parking", value: true },
+        ],
       },
     ],
-    hasMenu: "https://northparkproduce.com/menu-el-cajon",
-    founder: {
-      "@type": "Organization",
-      name: "NorthPark Produce",
-      foundingDate: "1980",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.4",
-      reviewCount: "101",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${dmSans.variable}`}
+      className={`${playfair.variable} ${dmSans.variable} ${jetbrains.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -170,8 +187,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+        <link rel="preconnect" href="https://static.wixstatic.com" />
+        <link rel="dns-prefetch" href="https://blogger.googleusercontent.com" />
       </head>
       <body className="antialiased">
         <LenisProvider>

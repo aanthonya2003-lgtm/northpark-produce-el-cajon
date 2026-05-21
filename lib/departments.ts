@@ -1,3 +1,5 @@
+import { images } from "./images";
+
 export type Department = {
   slug: string;
   title: string;
@@ -7,6 +9,7 @@ export type Department = {
   features: string[];
   image: string;
   imageAlt: string;
+  imageIsReal: boolean; // true = real NorthPark photo, false = stock placeholder
 };
 
 export const departments: Department[] = [
@@ -21,12 +24,11 @@ export const departments: Department[] = [
       "Daily deliveries — never stale",
       "International varieties under one roof",
       "Competitive El Cajon pricing",
-      "Cash & full card payment accepted",
+      "Cash, card & Apple Pay accepted",
     ],
-    image:
-      "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=1600&q=85&auto=format&fit=crop",
-    imageAlt:
-      "Fresh produce display with vibrant fruits and vegetables at an international market",
+    image: images.placeholderProduce,
+    imageAlt: "Fresh produce display at NorthPark Produce El Cajon",
+    imageIsReal: false,
   },
   {
     slug: "halal-meats",
@@ -34,16 +36,16 @@ export const departments: Department[] = [
     shortTitle: "Halal Butcher",
     tagline: "Certified halal. Cut daily. By butchers who know their craft.",
     description:
-      "A full halal-certified butcher counter. Lamb, beef, chicken, and goat — cut to your order, with the cuts you actually want for kebab, shawarma, kufta, and slow-roast feasts. The halal certification is on display at the meat counter.",
+      "A full halal-certified butcher counter. Lamb, beef, chicken, and goat — cut to your order, with the cuts you actually want for kebab, shawarma, kufta, and slow-roast feasts. The halal certification is on display at the meat counter, verified by Zabihah.",
     features: [
       "Full halal certification — verified on premises",
       "Lamb, beef, chicken, goat — cut to order",
       "Marinated kabob meats prepped fresh",
       "Bulk pricing for families & events",
     ],
-    image:
-      "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=1600&q=85&auto=format&fit=crop",
-    imageAlt: "Halal butcher counter with fresh meats displayed",
+    image: images.placeholderHalalMeat,
+    imageAlt: "Halal butcher counter with fresh cuts at NorthPark Produce El Cajon",
+    imageIsReal: false,
   },
   {
     slug: "bakery",
@@ -51,16 +53,16 @@ export const departments: Department[] = [
     shortTitle: "Bakery",
     tagline: "Bread baked in front of you. Still warm when you get home.",
     description:
-      "Our in-store bakery turns out flatbread, tanour, and pita all day — pulled hot from the oven and bagged right in front of you. It's the part of the store you smell before you see.",
+      "Our in-store bakery turns out flatbread, tanour, and pita all day — pulled hot from the oven and bagged right in front of you. Since 2024 we also press fresh tortillas using equipment from the legendary Pancho Villa Market.",
     features: [
       "Flatbread, tanour & pita baked daily",
       "Meat pies & sweet pastries",
-      "Made-fresh tortillas (since the 2024 expansion)",
+      "Fresh-pressed tortillas (since 2024)",
       "Bagged warm — never sitting on a shelf",
     ],
-    image:
-      "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=1600&q=85&auto=format&fit=crop",
-    imageAlt: "Fresh flatbread being pulled from a traditional clay oven",
+    image: images.placeholderBakery,
+    imageAlt: "Fresh flatbread baking at NorthPark Produce",
+    imageIsReal: false,
   },
   {
     slug: "grill",
@@ -75,15 +77,16 @@ export const departments: Department[] = [
       "Whole Kuzi (roast lamb) for catering",
       "Open daily 9 AM – 8 PM",
     ],
-    image:
-      "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=1600&q=85&auto=format&fit=crop",
-    imageAlt: "Beef and chicken kabobs grilling over an open flame",
+    image: images.grillMenuHero,
+    imageAlt: "Mediterranean grill at NorthPark Produce El Cajon",
+    imageIsReal: true,
   },
   {
     slug: "international",
     title: "International Grocery",
     shortTitle: "International",
-    tagline: "Lebanese, Iraqi, Persian, Russian, Hispanic, Asian — all in one aisle walk.",
+    tagline:
+      "Lebanese, Iraqi, Persian, Russian, Hispanic, Asian — all in one aisle walk.",
     description:
       "We searched the planet so you don't have to drive across the county. Pantry staples, cooking pastes, pickled vegetables, jarred preserves, frozen specialties, snacks, sweets, and teas from twenty-plus countries.",
     features: [
@@ -92,9 +95,9 @@ export const departments: Department[] = [
       "Asian sauces, noodles & sweets",
       "Bulk spices — most around $2/bag",
     ],
-    image:
-      "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=1600&q=85&auto=format&fit=crop",
-    imageAlt: "Aisles of international grocery products and pantry staples",
+    image: images.placeholderInternational,
+    imageAlt: "International grocery aisles at NorthPark Produce",
+    imageIsReal: false,
   },
   {
     slug: "deli",
@@ -109,9 +112,9 @@ export const departments: Department[] = [
       "Sliced-to-order halal deli meats",
       "Olives & pickled vegetables by the pound",
     ],
-    image:
-      "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=1600&q=85&auto=format&fit=crop",
+    image: images.placeholderDeli,
     imageAlt: "Mediterranean deli case with cheeses, olives, and prepared foods",
+    imageIsReal: false,
   },
   {
     slug: "hookah",
@@ -126,9 +129,9 @@ export const departments: Department[] = [
       "Wide flavored sheesha selection",
       "Among the most extensive in San Diego",
     ],
-    image:
-      "https://images.unsplash.com/photo-1606229365485-93a3b8ee0385?w=1600&q=85&auto=format&fit=crop",
-    imageAlt: "Hookah pipes and sheesha tobacco selection on display",
+    image: images.placeholderHookah,
+    imageAlt: "Hookah and sheesha tobacco selection",
+    imageIsReal: false,
   },
   {
     slug: "feasts",
@@ -144,8 +147,8 @@ export const departments: Department[] = [
       "Feast for 10 — $89.99",
       "Whole Kuzi with rice — $339",
     ],
-    image:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?w=1600&q=85&auto=format&fit=crop",
+    image: images.placeholderFeast,
     imageAlt: "A spread of grilled kabobs, rice, and Mediterranean salads",
+    imageIsReal: false,
   },
-]; 
+];
