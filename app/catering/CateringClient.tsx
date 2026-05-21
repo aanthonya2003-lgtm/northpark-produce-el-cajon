@@ -3,7 +3,15 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Phone, Check, Users, Award, Sparkles, ChevronRight } from "lucide-react";
+import {
+  Phone,
+  Check,
+  Users,
+  Award,
+  Sparkles,
+  ChevronRight,
+  AlertCircle,
+} from "lucide-react";
 import { familyFeasts } from "@/lib/menu-data";
 import { business } from "@/lib/business";
 
@@ -52,16 +60,22 @@ const whyUs = [
   {
     icon: <Users className="w-6 h-6" />,
     title: "45+ Years Experience",
-    body: "Family-owned since 1980. We have done thousands of family events.",
+    body: "Family-owned since 1980. Thousands of family events served.",
   },
 ];
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+// Web3Forms — free, no-account form backend. Client must set their own key.
+// Sign up at web3forms.com (30 seconds) → set NEXT_PUBLIC_WEB3FORMS_KEY in Vercel env vars.
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 export default function CateringClient() {
   const heroRef = useRef<HTMLElement>(null);
   const feastsRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -95,36 +109,49 @@ export default function CateringClient() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMsg("");
 
     const formData = new FormData(e.currentTarget);
-    const name = String(formData.get("name") || "");
-    const email = String(formData.get("email") || "");
-    const phone = String(formData.get("phone") || "");
-    const eventDate = String(formData.get("eventDate") || "");
-    const guests = String(formData.get("guests") || "");
-    const message = String(formData.get("message") || "");
+    formData.append("access_key", WEB3FORMS_KEY);
+    formData.append("subject", "Catering Inquiry · NorthPark Produce El Cajon");
+    formData.append("from_name", "NorthPark Produce Catering Form");
+    formData.append("botcheck", "");
 
-    const subject = `Catering Inquiry — ${name} · ${guests} guests · ${eventDate}`;
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Phone: ${phone}`,
-      `Event date: ${eventDate}`,
-      `Guest count: ${guests}`,
-      "",
-      "Notes:",
-      message,
-    ].join("\n");
+    if (!WEB3FORMS_KEY) {
+      setStatus("error");
+      setErrorMsg(
+        "Form not yet configured. Please call us directly at " +
+          business.phone +
+          " or email " +
+          business.email
+      );
+      return;
+    }
 
-    // Open the user's mail client — guaranteed deliverability without backend
-    window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-
-    setTimeout(() => setStatus("sent"), 600);
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        setStatus("sent");
+      } else {
+        setStatus("error");
+        setErrorMsg(
+          json.message ||
+            "Something went wrong. Please call " + business.phone + "."
+        );
+      }
+    } catch {
+      setStatus("error");
+      setErrorMsg(
+        "Network error. Please call us directly at " + business.phone + "."
+      );
+    }
   };
 
   return (
@@ -134,15 +161,15 @@ export default function CateringClient() {
         className="relative pt-32 md:pt-40 pb-16 md:pb-24 bg-[var(--brand-deep)] text-[var(--brand-cream)] overflow-hidden grain"
         aria-label="Catering hero"
       >
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 relative z-10">
           <div className="cat-hero-anim flex items-center gap-3 mb-5">
-            <span className="w-10 h-px bg-[var(--brand-gold)]" />
+            <span className="w-10 h-px bg-[var(--brand-ember)]" />
             <span className="eyebrow">Catering & Large Orders</span>
           </div>
-          <h1 className="cat-hero-anim font-display headline-mega max-w-4xl">
+          <h1 className="cat-hero-anim font-display headline-mega max-w-4xl text-[var(--brand-cream-bright)]">
             Feed the whole crowd.
             <br />
-            <span className="italic text-[var(--brand-gold)]">
+            <span className="italic text-[var(--brand-ember-light)]">
               From three to three hundred.
             </span>
           </h1>
@@ -154,7 +181,7 @@ export default function CateringClient() {
           <div className="cat-hero-anim mt-8">
             <a
               href={`tel:${business.phoneTel}`}
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-gold)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-[var(--brand-gold-hover)] transition-colors"
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-ember)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-[var(--brand-ember-light)] transition-colors"
             >
               <Phone className="w-4 h-4" />
               Call to Plan · <span className="phone">{business.phone}</span>
@@ -163,14 +190,13 @@ export default function CateringClient() {
         </div>
       </section>
 
-      {/* Family Feasts */}
       <section className="py-20 md:py-28 bg-[var(--brand-cream)]" aria-label="Family Feasts">
         <div ref={feastsRef} className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
             <div className="flex items-center justify-center gap-3 mb-5">
-              <span className="w-10 h-px bg-[var(--brand-gold)]" />
+              <span className="w-10 h-px bg-[var(--brand-ember)]" />
               <span className="eyebrow">Family Feasts</span>
-              <span className="w-10 h-px bg-[var(--brand-gold)]" />
+              <span className="w-10 h-px bg-[var(--brand-ember)]" />
             </div>
             <h2 className="font-display headline-large text-[var(--brand-deep)]">
               Pick the size.
@@ -189,19 +215,19 @@ export default function CateringClient() {
                   key={f.name}
                   className={`feast-card relative flex flex-col p-7 md:p-8 rounded-3xl border transition-all ${
                     isPopular
-                      ? "bg-gradient-to-br from-[var(--brand-deep)] to-[#2C180A] text-[var(--brand-cream)] border-[var(--brand-gold)]"
-                      : "bg-[var(--brand-white)] text-[var(--brand-deep)] border-[rgba(122,106,90,0.18)] hover:border-[var(--brand-gold)]"
+                      ? "bg-gradient-to-br from-[var(--brand-deep)] to-[#1F1308] text-[var(--brand-cream)] border-[var(--brand-ember)]"
+                      : "bg-[var(--brand-cream-bright)] text-[var(--brand-deep)] border-[rgba(140,123,107,0.18)] hover:border-[var(--brand-ember)]"
                   }`}
                 >
                   {isPopular && (
-                    <span className="absolute top-5 right-5 px-2.5 py-1 rounded-full bg-[var(--brand-gold)] text-[var(--brand-deep)] text-[10px] font-bold uppercase tracking-[0.18em]">
+                    <span className="absolute top-5 right-5 px-2.5 py-1 rounded-full bg-[var(--brand-ember)] text-[var(--brand-deep)] text-[10px] font-bold uppercase tracking-[0.18em] mono">
                       Popular
                     </span>
                   )}
                   <span
-                    className={`text-[11px] uppercase tracking-[0.22em] font-medium mb-3 ${
+                    className={`text-[11px] uppercase tracking-[0.22em] font-medium mb-3 mono ${
                       isPopular
-                        ? "text-[var(--brand-gold)]"
+                        ? "text-[var(--brand-ember)]"
                         : "text-[var(--brand-muted)]"
                     }`}
                   >
@@ -210,13 +236,7 @@ export default function CateringClient() {
                   <h3 className="font-display text-[26px] md:text-[30px] font-bold leading-tight">
                     {f.name}
                   </h3>
-                  <div
-                    className={`mt-3 mb-5 font-display text-4xl md:text-5xl font-bold tnum ${
-                      isPopular
-                        ? "text-[var(--brand-gold)]"
-                        : "text-[var(--brand-ember)]"
-                    }`}
-                  >
+                  <div className="mt-3 mb-5 font-display text-4xl md:text-5xl font-bold price text-[var(--brand-ember)]">
                     {f.price}
                   </div>
                   <p
@@ -233,12 +253,11 @@ export default function CateringClient() {
         </div>
       </section>
 
-      {/* Large orders */}
       <section className="py-20 md:py-28 bg-[var(--brand-surface)]" aria-label="Large orders">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="eyebrow">Big-Event Centerpieces</span>
-            <h2 className="mt-3 font-display headline-large text-[var(--brand-deep)]">
+            <h2 className="mt-3 font-display headline-large text-[var(--brand-cream-bright)]">
               For the big tables.
             </h2>
           </div>
@@ -246,16 +265,16 @@ export default function CateringClient() {
             {largeOrders.map((l) => (
               <div
                 key={l.name}
-                className="p-6 rounded-2xl bg-[var(--brand-white)] border border-[rgba(122,106,90,0.18)] hover:border-[var(--brand-gold)] transition-colors"
+                className="p-6 rounded-2xl bg-[rgba(245,235,216,0.03)] border border-[rgba(232,118,44,0.2)] hover:border-[var(--brand-ember)] hover:bg-[rgba(232,118,44,0.05)] transition-all text-[var(--brand-cream)]"
               >
-                <h3 className="font-display text-xl font-bold text-[var(--brand-deep)] leading-tight">
+                <h3 className="font-display text-xl font-bold text-[var(--brand-cream-bright)] leading-tight">
                   {l.name}
                 </h3>
-                <p className="mt-2 text-[13px] text-[var(--brand-muted)] leading-relaxed">
+                <p className="mt-2 text-[13px] opacity-75 leading-relaxed">
                   {l.description}
                 </p>
-                <div className="mt-5 flex items-end justify-between gap-3 pt-4 border-t border-[rgba(122,106,90,0.15)]">
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-[var(--brand-muted)]">
+                <div className="mt-5 flex items-end justify-between gap-3 pt-4 border-t border-[rgba(232,118,44,0.18)]">
+                  <span className="text-[11px] uppercase tracking-[0.18em] opacity-65 mono">
                     {l.serves}
                   </span>
                   <span className="price font-display font-bold text-xl text-[var(--brand-ember)]">
@@ -268,7 +287,6 @@ export default function CateringClient() {
         </div>
       </section>
 
-      {/* Why us + form */}
       <section className="py-20 md:py-28 bg-[var(--brand-cream)]" aria-label="Catering inquiry">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
@@ -283,7 +301,7 @@ export default function CateringClient() {
             <ul className="mt-8 space-y-5">
               {whyUs.map((w) => (
                 <li key={w.title} className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[rgba(212,168,67,0.15)] inline-flex items-center justify-center text-[var(--brand-ember)] flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-[rgba(232,118,44,0.12)] inline-flex items-center justify-center text-[var(--brand-ember)] flex-shrink-0">
                     {w.icon}
                   </div>
                   <div>
@@ -301,156 +319,109 @@ export default function CateringClient() {
 
           <div className="lg:col-span-7">
             <div className="p-7 md:p-10 rounded-3xl bg-[var(--brand-deep)] text-[var(--brand-cream)] grain relative">
-              <h3 className="font-display text-2xl md:text-3xl font-bold">
-                Catering Inquiry
-              </h3>
-              <p className="mt-2 text-[14px] opacity-75">
-                Send us the details and we&rsquo;ll be in touch within one
-                business day. Or just call —{" "}
-                <a
-                  href={`tel:${business.phoneTel}`}
-                  className="underline underline-offset-4 hover:text-[var(--brand-gold)] transition-colors phone"
-                >
-                  {business.phone}
-                </a>
-                .
-              </p>
+              <div className="relative z-10">
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-[var(--brand-cream-bright)]">
+                  Catering Inquiry
+                </h3>
+                <p className="mt-2 text-[14px] opacity-75">
+                  Send us the details and we&rsquo;ll be in touch within one
+                  business day. Or just call —{" "}
+                  <a
+                    href={`tel:${business.phoneTel}`}
+                    className="underline underline-offset-4 hover:text-[var(--brand-ember)] transition-colors phone"
+                  >
+                    {business.phone}
+                  </a>
+                  .
+                </p>
 
-              {status === "sent" ? (
-                <div className="mt-8 p-6 rounded-xl bg-[rgba(212,168,67,0.12)] border border-[rgba(212,168,67,0.3)]">
-                  <Check className="w-8 h-8 text-[var(--brand-gold)] mb-3" />
-                  <h4 className="font-display text-xl font-semibold">
-                    Email opened.
-                  </h4>
-                  <p className="text-[14px] opacity-85 mt-1">
-                    Send it from your mail app and we&rsquo;ll be in touch
-                    quickly. Prefer to talk now? Call{" "}
-                    <a
-                      href={`tel:${business.phoneTel}`}
-                      className="text-[var(--brand-gold)] font-semibold underline underline-offset-4 phone"
-                    >
-                      {business.phone}
-                    </a>
-                    .
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4"
-                  noValidate
-                >
-                  <div className="md:col-span-1">
-                    <label
-                      htmlFor="name"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      Your name
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      required
-                      autoComplete="name"
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] focus:border-[var(--brand-gold)] focus:outline-none text-base"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-1">
-                    <label
-                      htmlFor="email"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      autoComplete="email"
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] focus:border-[var(--brand-gold)] focus:outline-none"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-1">
-                    <label
-                      htmlFor="phone"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      autoComplete="tel"
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] focus:border-[var(--brand-gold)] focus:outline-none"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-1">
-                    <label
-                      htmlFor="eventDate"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      Event date
-                    </label>
-                    <input
-                      type="date"
-                      id="eventDate"
-                      name="eventDate"
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] focus:border-[var(--brand-gold)] focus:outline-none"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label
-                      htmlFor="guests"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      Approx. guest count
-                    </label>
-                    <input
-                      type="number"
-                      id="guests"
-                      name="guests"
-                      min={1}
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] focus:border-[var(--brand-gold)] focus:outline-none"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label
-                      htmlFor="message"
-                      className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-gold)] mb-2"
-                    >
-                      What are you planning?
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      placeholder="Tell us about the event, dietary needs, dishes you're interested in…"
-                      className="w-full px-4 py-3 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(212,168,67,0.25)] text-[var(--brand-cream)] placeholder:text-[var(--brand-cream)]/40 focus:border-[var(--brand-gold)] focus:outline-none resize-y"
-                      style={{ fontSize: "16px" }}
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <button
-                      type="submit"
-                      disabled={status === "sending"}
-                      className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-gold)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-[var(--brand-gold-hover)] transition-colors disabled:opacity-60"
-                    >
-                      {status === "sending" ? "Preparing…" : "Send Inquiry"}
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                    <p className="text-[11px] opacity-55 mt-3">
-                      Opens your email app. We respond within one business day.
+                {status === "sent" ? (
+                  <div className="mt-8 p-6 rounded-xl bg-[rgba(232,118,44,0.1)] border border-[rgba(232,118,44,0.3)]">
+                    <Check className="w-8 h-8 text-[var(--brand-ember)] mb-3" />
+                    <h4 className="font-display text-xl font-semibold text-[var(--brand-cream-bright)]">
+                      Inquiry received.
+                    </h4>
+                    <p className="text-[14px] opacity-85 mt-1">
+                      We&rsquo;ll be in touch within one business day. Need
+                      something sooner? Call{" "}
+                      <a
+                        href={`tel:${business.phoneTel}`}
+                        className="text-[var(--brand-ember)] font-semibold underline underline-offset-4 phone"
+                      >
+                        {business.phone}
+                      </a>
+                      .
                     </p>
                   </div>
-                </form>
-              )}
+                ) : (
+                  <form
+                    onSubmit={handleSubmit}
+                    className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4"
+                    noValidate
+                  >
+                    <input
+                      type="checkbox"
+                      name="botcheck"
+                      className="hidden"
+                      style={{ display: "none" }}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+
+                    <div className="md:col-span-1">
+                      <label
+                        htmlFor="name"
+                        className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono"
+                      >
+                        Your name
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        required
+                        autoComplete="name"
+                        className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] focus:border-[var(--brand-ember)] focus:outline-none"
+                        style={{ fontSize: "16px" }}
+                      />
+                    </div>
+                    <div className="md:col-span-1">
+                      <label htmlFor="email" className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono">Email</label>
+                      <input type="email" id="email" name="email" required autoComplete="email" className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] focus:border-[var(--brand-ember)] focus:outline-none" style={{ fontSize: "16px" }} />
+                    </div>
+                    <div className="md:col-span-1">
+                      <label htmlFor="phone" className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono">Phone</label>
+                      <input type="tel" id="phone" name="phone" autoComplete="tel" className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] focus:border-[var(--brand-ember)] focus:outline-none" style={{ fontSize: "16px" }} />
+                    </div>
+                    <div className="md:col-span-1">
+                      <label htmlFor="event_date" className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono">Event date</label>
+                      <input type="date" id="event_date" name="event_date" className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] focus:border-[var(--brand-ember)] focus:outline-none" style={{ fontSize: "16px" }} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label htmlFor="guest_count" className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono">Approx. guest count</label>
+                      <input type="number" id="guest_count" name="guest_count" min={1} className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] focus:border-[var(--brand-ember)] focus:outline-none" style={{ fontSize: "16px" }} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label htmlFor="message" className="block text-[11px] uppercase tracking-[0.22em] text-[var(--brand-ember)] mb-2 mono">What are you planning?</label>
+                      <textarea id="message" name="message" rows={4} placeholder="Tell us about the event, dietary needs, dishes you're interested in…" className="w-full px-4 py-3 rounded-xl bg-[rgba(245,235,216,0.06)] border border-[rgba(232,118,44,0.25)] text-[var(--brand-cream-bright)] placeholder:text-[var(--brand-cream)]/40 focus:border-[var(--brand-ember)] focus:outline-none resize-y" style={{ fontSize: "16px" }} />
+                    </div>
+
+                    {status === "error" && (
+                      <div className="md:col-span-2 p-4 rounded-lg bg-[rgba(232,76,44,0.1)] border border-[rgba(232,76,44,0.4)] flex items-start gap-3">
+                        <AlertCircle className="w-5 h-5 text-[#E84C2C] flex-shrink-0 mt-0.5" />
+                        <p className="text-[13px] text-[var(--brand-cream-bright)]">{errorMsg}</p>
+                      </div>
+                    )}
+
+                    <div className="md:col-span-2">
+                      <button type="submit" disabled={status === "sending"} className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-ember)] text-[var(--brand-deep)] font-semibold text-[15px] hover:bg-[var(--brand-ember-light)] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                        {status === "sending" ? "Sending…" : "Send Inquiry"}
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                      <p className="text-[11px] opacity-55 mt-3">We respond within one business day.</p>
+                    </div>
+                  </form>
+                )}
+              </div>
             </div>
           </div>
         </div>
