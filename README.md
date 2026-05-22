@@ -1,4 +1,4 @@
-# NorthPark Produce El Cajon — v2.0
+# NorthPark Produce El Cajon — v3.0
 
 Production website for **NorthPark Produce El Cajon** — international market, halal butcher, Mediterranean grill, bakery, deli, and hookah shop. Family-owned since 1980.
 
@@ -6,17 +6,27 @@ Production website for **NorthPark Produce El Cajon** — international market, 
 **Phone:** (619) 440-4401
 **Email:** northparkproduce@yahoo.com
 
-## What's new in v2.0
+## What's new in v3.0
 
-- **Real photography** sourced from the official northparkproduce.com Wix CDN — no stock photos in primary hero positions
-- **Live weekly ad embed** — the actual current weekly ad images pull from the client's Wix site, auto-updating every Monday
-- **Live Facebook page embed** on `/weekly-ad` showing current posts
-- **Functional forms** via Web3Forms (catering inquiry + weekly ad email signup) — no mailto fallbacks
-- **Bidirectional two-row testimonial marquee**
-- **DoorDash removed** — verified non-existent for El Cajon location
-- **Updated color palette:** deeper Iraqi-night background (#0F0A06), ember (#E8762C), saffron (#D4A017)
-- **JetBrains Mono** added for prices, hours, and data
-- **Three-location showcase** on contact page
+- **Midnight green + spice gold palette** — `#1B3A2D` background, `#C8922A` accent (Phoenicia × Natoora aesthetic, replacing v2 brown+ember)
+- **Instagram added** — `@northparkproduce` verified active (1,020 followers, family account)
+- **Press badges restyled** — publication-colored wordmarks (SanDiegoVille red, Zabihah green, BIA blue)
+- **Catering platter add-ons catalog** — Iraqi Salad, Tabbouli, Fattoush, Hummus, Baba Ganoush, Eggplant, Greek with M/L pricing
+- **llms-full.txt** — comprehensive AI-discovery content layer
+- **Hero clip-path overlay wipe** — `inset(0 100% 0 0)` → `inset(0 0% 0 0)` golden sweep on page load
+- **.npmrc enhanced** with `shamefully-hoist=true` (better React 19 peer dep stability)
+- **Charcoal text on warm-white** for higher legibility on light sections
+- **Order Now nav button** is now a real `<Link href="/order">` (was `<button>`)
+
+## Inherited from v2
+
+- Real photography from official northparkproduce.com Wix CDN (11 real photos)
+- Live weekly ad images auto-update from client's Wix every Monday
+- Live Facebook page embed on `/weekly-ad`
+- Functional Web3Forms catering inquiry + email signup (no mailto)
+- Two-row bidirectional testimonial marquee
+- DoorDash honest disclosure (not available for El Cajon)
+- All three locations on /contact
 
 ## Stack
 
@@ -33,58 +43,51 @@ Production website for **NorthPark Produce El Cajon** — international market, 
 
 | Route | Purpose |
 |---|---|
-| `/` | Homepage — hero, story, 8 departments, featured menu, stats, testimonials (2 rows bidirectional), press, weekly teaser, hours/map |
+| `/` | Hero (clip-path wipe), story, 8 departments, featured menu, stats, testimonials (2 rows), press badges, weekly teaser, hours/map |
 | `/menu` | Full Mediterranean Grill menu, filterable, Framer Motion tab indicator |
 | `/market` | 8 departments showcase with clip-path wipes & parallax |
-| `/order` | Online ordering hub (Grubhub + Uber Eats verified for El Cajon) |
-| `/catering` | Family Feasts pricing + Web3Forms inquiry |
-| `/weekly-ad` | **Live weekly ad images + Facebook page embed + Web3Forms email signup** |
-| `/contact` | Map, hours, click-to-call, all 3 locations |
+| `/order` | Online ordering hub (Grubhub + Uber Eats verified) |
+| `/catering` | Family Feasts + **platter add-ons catalog** + Web3Forms inquiry |
+| `/weekly-ad` | Live Wix CDN ad images + Facebook page embed + Web3Forms signup |
+| `/contact` | Map, hours, click-to-call, Facebook & Instagram, all 3 locations |
 
 ## Local Development
 
 ```bash
 cp .env.example .env.local
-# fill in NEXT_PUBLIC_WEB3FORMS_KEY (see Forms section below)
-npm install     # .npmrc forces legacy-peer-deps for React 19
+# fill in NEXT_PUBLIC_WEB3FORMS_KEY
+npm install     # .npmrc forces legacy-peer-deps + shamefully-hoist
 npm run dev     # http://localhost:3000
 npm run build   # production build
 npm run typecheck
 ```
 
-## Forms Setup (CRITICAL — must do before launch)
+## Forms Setup (CRITICAL before launch)
 
-The catering inquiry form and weekly-ad email signup both POST to [Web3Forms](https://web3forms.com).
+Sign up free at [web3forms.com](https://web3forms.com) → use `northparkproduce@yahoo.com` → copy access key → add `NEXT_PUBLIC_WEB3FORMS_KEY` to Vercel env vars → redeploy.
 
-**Setup:**
-1. Sign up free at <https://web3forms.com>
-2. Use email `northparkproduce@yahoo.com` so submissions go directly to the business
-3. Copy your access key from the dashboard
-4. In Vercel: Project Settings → Environment Variables → Add:
-   - Name: `NEXT_PUBLIC_WEB3FORMS_KEY`
-   - Value: your access key
-   - Environments: Production, Preview, Development
-5. Redeploy
-
-**Until set:** Forms display a graceful error directing users to call (619) 440-4401.
+Without the key, forms show graceful error redirecting users to call (619) 440-4401.
 
 ## Deploy
 
-1. Go to [vercel.com/new](https://vercel.com/new)
-2. Import `aanthonya2003-lgtm/northpark-produce-el-cajon`
-3. Add `NEXT_PUBLIC_WEB3FORMS_KEY` env var (see above)
-4. Framework auto-detects as Next.js → Deploy
-5. Live in ~90 seconds
+1. Push merges automatically from GitHub → Vercel
+2. Repo: <https://github.com/aanthonya2003-lgtm/northpark-produce-el-cajon>
+3. Live deploy: <https://northpark-produce-el-cajon.vercel.app>
 
-## Photography Status
+## v3.0 Verified Source Map
 
-All hero, story, and grill section images are **REAL NorthPark Produce photos** pulled live from `static.wixstatic.com` (client's official Wix CDN). The weekly ad page pulls live ad PNG images — when the client updates Wix on Monday, those changes appear here immediately.
-
-Department category images for **Produce, Halal Meats, Bakery, International, Deli, Hookah, Feasts** are currently labeled "Stock" placeholders (contextually matched Unsplash) and should be replaced with real photos. Codebase clearly marks each as `imageIsReal: false` in `lib/departments.ts`.
-
-**Priority client request:** photograph the bakery oven, halal meat counter, produce section, and hookah wall (~30 min on-site shoot). Update the URLs in `lib/images.ts` and `lib/departments.ts`.
-
-## Repo
-
-- GitHub: <https://github.com/aanthonya2003-lgtm/northpark-produce-el-cajon>
-- Wix mirror (client's outdated site): <https://www.northparkproduce.com/el-cajon>
+| Asset | Source | Status |
+|---|---|---|
+| Logo | northparkproduce.com Wix CDN | Live |
+| Hero photo | northparkproduce.com /el-cajon | Live |
+| Story photo | northparkproduce.com /about | Live |
+| Menu category images | northparkproduce.com /menu-el-cajon | Live |
+| Weekly ad images (PNG) | northparkproduce.com /copy-of-weekly-specials | Live (auto-update) |
+| Press: SanDiegoVille articles | sandiegoville.com | Live |
+| Press: real store photo | SanDiegoVille blogger CDN | Live (Super Mercado article) |
+| Grubhub link | grubhub.com /.../2875424 | Verified live |
+| Uber Eats link | ubereats.com /.../bUPVL... | Verified live (Postmates same hash → El Cajon) |
+| DoorDash | NOT AVAILABLE for El Cajon | Omitted, honest disclosure on /order |
+| Facebook | facebook.com/northparkproduceelcajon | 4,554 likes (El Cajon-specific) |
+| Instagram | instagram.com/northparkproduce | 1,020 followers (family account) |
+| Zabihah | zabihah.com /.../north-park-produce-el-cajon-ca | Verified live |
