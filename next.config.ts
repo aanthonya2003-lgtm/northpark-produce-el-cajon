@@ -4,7 +4,7 @@ const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Referrer-Policy", value: "origin-when-cross-origin" },
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
@@ -25,10 +25,13 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "static.wixstatic.com" },
+      { protocol: "https", hostname: "northparkproduce.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "source.unsplash.com" },
       { protocol: "https", hostname: "plus.unsplash.com" },
       { protocol: "https", hostname: "blogger.googleusercontent.com" },
+      { protocol: "https", hostname: "scontent.cdninstagram.com" },
+      { protocol: "https", hostname: "lookaside.fbsbx.com" },
     ],
   },
   async headers() {

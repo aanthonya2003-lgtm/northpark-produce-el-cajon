@@ -1,14 +1,5 @@
-// Verified business data — sourced directly from northparkproduce.com,
-// Google Business, Facebook (northparkproduceelcajon), Yelp, Postmates (UE-backed), Zabihah.
+// Verified business data — v3.0
 // DO NOT modify without re-verification.
-//
-// Verification status (2026-05-21):
-// - Grubhub: VERIFIED LIVE — /restaurant/north-park-produce-e-chase-ave-432-e-chase-ave-el-cajon/2875424
-// - Uber Eats: VERIFIED EL CAJON — hash bUPVLSjOTpKNpvlAzMeXsQ confirmed
-//   (Postmates uses same hash & resolves to 432 East Chase Avenue, El Cajon)
-// - DoorDash: NOT AVAILABLE for El Cajon location (only San Diego/North Park has DoorDash)
-// - Facebook: VERIFIED — northparkproduceelcajon page, 4,554 likes, 76 talking
-// - Instagram: NO VERIFIED ACCOUNT for El Cajon Chase Ave location
 
 export const business = {
   name: "NorthPark Produce",
@@ -25,6 +16,8 @@ export const business = {
     full: "432 E Chase Ave, El Cajon, CA 92020",
     googleMapsUrl:
       "https://www.google.com/maps/search/?api=1&query=North+Park+Produce+432+E+Chase+Ave+El+Cajon+CA+92020",
+    googleMapsEmbed:
+      "https://www.google.com/maps?q=432+E+Chase+Ave,+El+Cajon,+CA+92020&output=embed",
     geo: { lat: 32.780489, lng: -116.95741 },
   },
   phone: "(619) 440-4401",
@@ -82,12 +75,22 @@ export const business = {
     },
   ],
 
+  // Verified social
   social: [
     {
       platform: "Facebook",
       handle: "@northparkproduceelcajon",
       url: "https://www.facebook.com/northparkproduceelcajon/",
       followers: "4,554 likes",
+      note: "El Cajon location",
+      verified: true,
+    },
+    {
+      platform: "Instagram",
+      handle: "@northparkproduce",
+      url: "https://www.instagram.com/northparkproduce/",
+      followers: "1,020 followers",
+      note: "Family Instagram",
       verified: true,
     },
   ],
@@ -95,6 +98,7 @@ export const business = {
   press: [
     {
       outlet: "SanDiegoVille",
+      badgeClass: "press-badge-sandiegoville",
       date: "Nov 21, 2024",
       title:
         "San Diego's North Park Produce Expands With 'Super Mercado' To Preserve Pancho Villa Market Legacy",
@@ -102,25 +106,29 @@ export const business = {
     },
     {
       outlet: "SanDiegoVille",
+      badgeClass: "press-badge-sandiegoville",
       date: "Jan 12, 2025",
       title:
-        "North Park Produce Pumping Out Fresh-Made Tortillas Using Some Pancho Villa Market Equipment",
+        "Pumping Out Fresh-Made Tortillas Using Pancho Villa Market Equipment",
       url: "https://www.sandiegoville.com/2025/01/san-diegos-north-park-produce-pumping.html",
     },
     {
       outlet: "Boulevard BIA",
+      badgeClass: "press-badge-bia",
       date: "Business Listing",
       title: "North Park Produce — El Cajon Boulevard",
       url: "https://theboulevard.org/listing-item/north-park-produce/",
     },
     {
       outlet: "Zabihah",
+      badgeClass: "press-badge-zabihah",
       date: "Halal Verified",
       title: "Halal-certified butcher & deli",
       url: "https://www.zabihah.com/restaurants/ca33a6d4-7767-11ef-95ae-6045bdeb9f57/north-park-produce-el-cajon-ca",
     },
     {
       outlet: "Wheree",
+      badgeClass: "press-badge-wheree",
       date: "Editorial",
       title: "Iraqi market editorial review",
       url: "https://north-park-produce-1.wheree.com/",
@@ -185,6 +193,17 @@ export const business = {
       source: "Roadtrippers",
       rating: 5,
     },
+  ],
+
+  // Catering platter add-ons catalog (verified from /menu-el-cajon)
+  platterAddOns: [
+    { name: "Iraqi Salad", med: "$24.99", lg: "$44.99", note: "House signature" },
+    { name: "Tabbouli", med: "$24.99", lg: "$44.99", note: "Parsley, bulgur, mint, tomato" },
+    { name: "Fattoush", med: "$24.99", lg: "$44.99", note: "Crispy pita, sumac dressing" },
+    { name: "Hummus", med: "$24.99", lg: "$44.99", note: "Made fresh daily" },
+    { name: "Baba Ganoush", med: "$24.99", lg: "$44.99", note: "Smoked eggplant" },
+    { name: "Eggplant Salad", med: "$24.99", lg: "$44.99", note: "Roasted, herbed" },
+    { name: "Greek Salad", med: "$24.99", lg: "$44.99", note: "Feta, olives, fresh herbs" },
   ],
 } as const;
 

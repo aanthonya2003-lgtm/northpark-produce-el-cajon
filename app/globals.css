@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* v2.0 color palette — deeper, warmer, more cinematic */
-  --color-deep: #0F0A06;          /* Iraqi night — warmer than black */
-  --color-surface: #1C1209;       /* Card/panel background */
-  --color-surface-elevated: #2A1B0F;
-  --color-ember: #E8762C;         /* Primary — fire, grill warmth */
-  --color-ember-light: #F59B4E;   /* Hover */
-  --color-saffron: #D4A017;       /* Spice, gold, prestige */
+  /* v3.0 — Phoenicia Specialty Foods meets Natoora London */
+  --color-deep: #1B3A2D;
+  --color-deep-darker: #143124;
+  --color-surface: #0E2218;
+  --color-surface-elevated: #1F4434;
+  --color-ember: #C8922A;
+  --color-ember-light: #E0AC42;
+  --color-saffron: #D4A017;
   --color-saffron-light: #E8B530;
-  --color-cream: #F5EBD8;         /* Bread-warm off-white */
-  --color-cream-bright: #FCF6E8;
-  --color-muted: #8C7B6B;         /* Stone grey */
+  --color-cream: #F5EFE0;
+  --color-cream-bright: #FEFCF8;
+  --color-charcoal: #1A1A1A;
+  --color-muted: #8C7B6B;
   --color-border: rgba(140, 123, 107, 0.18);
 
   --font-display: var(--font-playfair), Georgia, serif;
@@ -23,15 +25,17 @@
 }
 
 :root {
-  --brand-deep: #0F0A06;
-  --brand-surface: #1C1209;
-  --brand-surface-elevated: #2A1B0F;
-  --brand-ember: #E8762C;
-  --brand-ember-light: #F59B4E;
+  --brand-deep: #1B3A2D;
+  --brand-deep-darker: #143124;
+  --brand-surface: #0E2218;
+  --brand-surface-elevated: #1F4434;
+  --brand-ember: #C8922A;
+  --brand-ember-light: #E0AC42;
   --brand-saffron: #D4A017;
   --brand-saffron-light: #E8B530;
-  --brand-cream: #F5EBD8;
-  --brand-cream-bright: #FCF6E8;
+  --brand-cream: #F5EFE0;
+  --brand-cream-bright: #FEFCF8;
+  --brand-charcoal: #1A1A1A;
   --brand-muted: #8C7B6B;
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -51,8 +55,8 @@ html {
 }
 
 body {
-  background: var(--brand-cream);
-  color: var(--brand-deep);
+  background: var(--brand-cream-bright);
+  color: var(--brand-charcoal);
   font-family: var(--font-sans);
   font-weight: 400;
   line-height: 1.6;
@@ -70,71 +74,36 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-p {
-  text-wrap: pretty;
-}
-
-a {
-  text-underline-offset: 4px;
-  color: inherit;
-}
-
-img {
-  border-radius: 12px;
-}
-
-img.rounded-none, img.no-radius {
-  border-radius: 0;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
+p { text-wrap: pretty; }
+a { text-underline-offset: 4px; color: inherit; }
+img { border-radius: 12px; }
+img.rounded-none, img.no-radius { border-radius: 0; }
+button { font-family: inherit; cursor: pointer; }
 
 .tnum, .price, .hours, .phone, .stat-num, time {
   font-feature-settings: "tnum" 1, "lnum" 1;
   font-variant-numeric: tabular-nums;
 }
+.mono { font-family: var(--font-mono); }
 
-.mono {
-  font-family: var(--font-mono);
-}
+::selection { background: var(--brand-ember); color: var(--brand-cream-bright); }
+::-moz-selection { background: var(--brand-ember); color: var(--brand-cream-bright); }
 
-::selection {
-  background: var(--brand-ember);
-  color: var(--brand-cream-bright);
-}
-
-::-moz-selection {
-  background: var(--brand-ember);
-  color: var(--brand-cream-bright);
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--brand-deep);
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--brand-deep); }
 ::-webkit-scrollbar-thumb {
   background: var(--brand-ember);
   border-radius: 5px;
   border: 2px solid var(--brand-deep);
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-ember-light);
-}
+::-webkit-scrollbar-thumb:hover { background: var(--brand-ember-light); }
 
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--brand-ember) var(--brand-deep);
 }
 
-.grain {
-  position: relative;
-}
+.grain { position: relative; }
 .grain::after {
   content: "";
   position: absolute;
@@ -156,7 +125,7 @@ body::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size: 400px 400px;
   mix-blend-mode: overlay;
-  opacity: 0.025;
+  opacity: 0.02;
 }
 
 .logo-on-dark { filter: brightness(0) invert(1); }
@@ -168,6 +137,12 @@ body::before {
   100% { transform: scale(1.0) translate3d(0, -1%, 0); }
 }
 .ken-burns { animation: kenBurns 12s ease-out forwards; will-change: transform; }
+
+@keyframes wipeRight {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0% 0 0); }
+}
+.clip-wipe { animation: wipeRight 1.6s var(--ease-spring) forwards; }
 
 @keyframes marqueeScroll {
   from { transform: translate3d(0, 0, 0); }
@@ -222,7 +197,7 @@ body::before {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .ken-burns, .marquee-css, .marquee-css-reverse, .float-pulse {
+  .ken-burns, .marquee-css, .marquee-css-reverse, .float-pulse, .clip-wipe {
     animation: none !important;
   }
 }
@@ -234,7 +209,7 @@ body::before {
   z-index: 100;
   padding: 0.75rem 1.25rem;
   background: var(--brand-ember);
-  color: var(--brand-cream-bright);
+  color: var(--brand-deep);
   font-weight: 600;
   border-radius: 0 0 8px 0;
 }
@@ -254,5 +229,16 @@ body::before {
 }
 .hover-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 24px 60px -30px rgba(232, 118, 44, 0.4);
+  box-shadow: 0 24px 60px -30px rgba(200, 146, 42, 0.45);
 }
+
+/* v3 publication badge styles */
+.press-badge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.press-badge-sandiegoville { color: #C8232A; }
+.press-badge-zabihah { color: #16803C; }
+.press-badge-bia { color: #2A4A8C; }
+.press-badge-wheree { color: var(--brand-charcoal); }
