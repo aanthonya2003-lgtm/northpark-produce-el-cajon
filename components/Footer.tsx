@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, MapPin, Phone, Mail, Clock, BadgeCheck } from "lucide-react";
+import { Facebook, Instagram, MapPin, Phone, Mail, Clock, BadgeCheck } from "lucide-react";
 import { business } from "@/lib/business";
 import { images } from "@/lib/images";
 
@@ -59,17 +59,22 @@ export default function Footer() {
               selection in the county.
             </p>
 
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-6 flex items-center gap-3 flex-wrap">
               {business.social.map((s) => (
                 <a
                   key={s.platform}
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-[rgba(232,118,44,0.3)] hover:border-[var(--brand-ember)] hover:bg-[rgba(232,118,44,0.1)] text-[var(--brand-ember)] transition-all"
-                  aria-label={`Follow on ${s.platform}`}
+                  className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-[rgba(200,146,42,0.3)] hover:border-[var(--brand-ember)] hover:bg-[rgba(200,146,42,0.12)] text-[var(--brand-ember)] transition-all"
+                  aria-label={`${s.note} — ${s.platform}`}
+                  title={`${s.platform} · ${s.followers} · ${s.note}`}
                 >
-                  <Facebook className="w-4 h-4" />
+                  {s.platform === "Instagram" ? (
+                    <Instagram className="w-4 h-4" />
+                  ) : (
+                    <Facebook className="w-4 h-4" />
+                  )}
                 </a>
               ))}
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[rgba(212,160,23,0.12)] border border-[rgba(212,160,23,0.3)] text-[var(--brand-saffron)] text-[10px] uppercase tracking-[0.2em] mono">
@@ -147,7 +152,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-8 border-t border-[rgba(232,118,44,0.15)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="mt-14 pt-8 border-t border-[rgba(200,146,42,0.15)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-[12px] text-[var(--brand-cream)] opacity-55">
             © {new Date().getFullYear()} NorthPark Produce. All rights reserved.
             Proudly serving El Cajon, San Diego &amp; Poway since 1980.

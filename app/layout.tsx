@@ -31,7 +31,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0F0A06",
+  themeColor: "#1B3A2D",
 };
 
 export const metadata: Metadata = {
@@ -130,6 +130,7 @@ export default function RootLayout({
         url: "https://northparkproduce.com",
         sameAs: [
           business.social[0]?.url,
+          business.social[1]?.url,
           "https://www.yelp.com/biz/north-park-produce-el-cajon-5",
           "https://www.zabihah.com/restaurants/ca33a6d4-7767-11ef-95ae-6045bdeb9f57/north-park-produce-el-cajon-ca",
         ],

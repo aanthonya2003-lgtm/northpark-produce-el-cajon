@@ -126,9 +126,14 @@ export default function Hero() {
         />
       </div>
 
-      {/* Cinematic gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(15,10,6,0.5)] via-[rgba(15,10,6,0.45)] to-[rgba(15,10,6,0.95)]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(15,10,6,0.65)] via-transparent to-transparent" />
+      {/* v3 midnight green gradients */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(27,58,45,0.55)] via-[rgba(27,58,45,0.5)] to-[rgba(20,49,36,0.95)]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(20,49,36,0.7)] via-transparent to-transparent" />
+      {/* v3 — clip-path wipe overlay reveals on page load */}
+      <div
+        className="absolute inset-0 bg-gradient-to-tr from-[rgba(200,146,42,0.18)] via-transparent to-transparent clip-wipe pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 h-full max-w-[1400px] mx-auto px-5 md:px-8 flex flex-col justify-center pt-24 pb-20">
         <div className="max-w-4xl">
@@ -190,7 +195,7 @@ export default function Hero() {
           className="absolute right-5 md:right-8 bottom-28 md:bottom-32 lg:right-12"
           style={{ opacity: 1, transform: "scale(1)" }}
         >
-          <div className="hidden md:flex flex-col items-center text-center bg-[rgba(15,10,6,0.6)] backdrop-blur-md border border-[rgba(232,118,44,0.35)] rounded-2xl px-6 py-5 max-w-[180px]">
+          <div className="hidden md:flex flex-col items-center text-center bg-[rgba(20,49,36,0.7)] backdrop-blur-md border border-[rgba(200,146,42,0.4)] rounded-2xl px-6 py-5 max-w-[180px]">
             <BadgeCheck className="w-7 h-7 text-[var(--brand-ember)] mb-2" />
             <span className="font-display text-[15px] font-bold text-[var(--brand-cream-bright)] leading-tight">
               Halal Certified
